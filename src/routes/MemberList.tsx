@@ -1,50 +1,54 @@
 import { useState, useEffect } from "react";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import * as types from "../types/member";
+import { useQuery, gql } from "@apollo/client";
+import { Member } from "../interfaces/Member";
+import ButtonLink from "../components/ButtonLink";
+import MemberDetails from "../components/MemberDetails";
 
+const GET_ALL_MEMBERS = gql`
+query AllMembers {
+    allMembers {
+        id
+        username
+        password
+        fullName
+        createdAt
+        updatedAt
+    }
+}
+`
 
 export default function MemberList() {
-    const [memberList, setMemberList] = useState<types.member[] | null>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const client = new ApolloClient({
-        uri: "http://localhost:4000/graphql",
-        cache: new InMemoryCache(),
-    });
-    const getMemberList = () => {
-        client.query({
-            query: gql`
-                query AllMembers {
-                    allMembers {
-                        id
-                        username
-                        password
-                        fullName
-                    }
-                }
-            `
-        }).then((res) => res.data.allMembers)
-        .then((members : types.member[]) => setMemberList(members))
-        setLoading(false);
-    }
+    const [memberList, setMemberList] = useState<Member[] | null>([]);
+
+    const { data, loading } = useQuery(GET_ALL_MEMBERS);
+
     useEffect(() => {
-        getMemberList();
-    }, [])
-console.log(memberList);
+        if (!loading) {
+            setMemberList(data.allMembers);
+        }
+    }, [data])
+
+    console.log(memberList, memberList===null, memberList===undefined)
+
     return (
         <div>
-            {loading ? <h1>Loading page...</h1> :
+            {loading ? <></> :
                 <div>
-                    {memberList === null? null : memberList.map((member: types.member) => {
+                    {memberList === null? null : memberList.map((member: Member) => {
                         return (
-                            <ul key={member.id}>
-                                <li>id: {member.id}</li>
-                                <li>username: {member.username}</li>
-                                <li>password: {member.password}</li>
-                                <li>fullName: {member.fullName}</li>
-                            </ul>
+                            <MemberDetails 
+                                id={member.id}
+                                username={member.username}
+                                password={member.password}
+                                fullName={member.password}
+                                createdAt={member.createdAt}
+                                updatedAt={member.updatedAt}
+                            />
                         );
                     })}
                 </div>
             }
-        </div>);
+            <ButtonLink text="회원가입" link="/signup" />
+        </div>
+    );
 }
