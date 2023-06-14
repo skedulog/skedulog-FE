@@ -40,7 +40,7 @@ export default function MemberList() {
                                 id={member.id}
                                 username={member.username}
                                 password={member.password}
-                                fullName={member.password}
+                                fullName={member.fullName}
                                 createdAt={member.createdAt}
                                 updatedAt={member.updatedAt}
                             />
