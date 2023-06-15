@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
-import { Member } from "../interfaces/Member";
-import ButtonLink from "../components/ButtonLink";
-import MemberDetails from "../components/MemberDetails";
+import { Member } from "../../interfaces/Member";
+import ButtonLink from "../../components/ButtonLink";
+import MemberDetails from "../../components/MemberDetails";
 
 const GET_ALL_MEMBERS = gql`
-query AllMembers {
-    allMembers {
-        id
-        username
-        password
-        fullName
-        createdAt
-        updatedAt
+    query AllMembers {
+        allMembers {
+            id
+            username
+            password
+            fullName
+            createdAt
+            updatedAt
+        }
     }
-}
-`
+`;
 
 export default function MemberList() {
     const [memberList, setMemberList] = useState<Member[] | null>([]);
@@ -27,8 +27,6 @@ export default function MemberList() {
             setMemberList(data.allMembers);
         }
     }, [data])
-
-    console.log(memberList, memberList===null, memberList===undefined)
 
     return (
         <div>

@@ -1,10 +1,10 @@
 import { BrowserRouter as Router,
         Routes,
         Route } from 'react-router-dom';
-import MemberView from "./routes/MemberView";
-import MemberList from "./routes/MemberList";
-import MemberUpdate from "./routes/MemberUpdate";
-import SignUp from "./routes/SignUp";
+import MemberView from "./routes/member/MemberView";
+import MemberList from "./routes/member/MemberList";
+import MemberUpdate from "./routes/member/MemberUpdate";
+import SignUp from "./routes/signup/SignUp";
 
 export default function App() {
   return (

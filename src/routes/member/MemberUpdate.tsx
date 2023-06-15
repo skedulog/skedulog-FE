@@ -1,34 +1,34 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Member } from "../interfaces/Member";
-import ButtonLink from "../components/ButtonLink";
+import { Member } from "../../interfaces/Member";
+import ButtonLink from "../../components/ButtonLink";
 
 
 const GET_MEMBER = gql`
-query Member($memberId: Int!) {
-    member(id: $memberId) {
-      id
-      username
-      password
-      fullName
-      createdAt
-      updatedAt
+    query Member($memberId: Int!) {
+        member(id: $memberId) {
+            id
+            username
+            password
+            fullName
+            createdAt
+            updatedAt
+        }
     }
-  }
 `;
 
 const UPDATE_MEMBER = gql`
-mutation UpdateMember($updateMemberId: Int!, $password: String, $fullName: String) {
-    updateMember(id: $updateMemberId, password: $password, fullName: $fullName) {
-        id
-        username
-        password
-        fullName
-        createdAt
-        updatedAt
-    }
-}  
+    mutation UpdateMember($updateMemberId: Int!, $password: String, $fullName: String) {
+        updateMember(id: $updateMemberId, password: $password, fullName: $fullName) {
+            id
+            username
+            password
+            fullName
+            createdAt
+            updatedAt
+        }
+    }  
 `;
 
 export default function MemberUpdate() {
