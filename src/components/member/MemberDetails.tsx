@@ -1,4 +1,4 @@
-import { Member } from "../interfaces/Member";
+import { Member } from "../../interfaces/Member";
 import { Link } from "react-router-dom"
 
 const MemberDetails: React.FC<Member> = (props) => {

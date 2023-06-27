@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { Member } from "../../interfaces/Member";
-import ButtonLink from "../../components/ButtonLink";
-import MemberDetails from "../../components/MemberDetails";
+import ButtonLink from "../../components/common/ButtonLink";
+import MemberDetails from "../../components/member/MemberDetails";
 
 const GET_ALL_MEMBERS = gql`
     query AllMembers {
@@ -32,9 +32,10 @@ export default function MemberList() {
         <div>
             {loading ? <></> :
                 <div>
-                    {memberList === null? null : memberList.map((member: Member) => {
+                    {memberList === null ? null : memberList.map((member: Member, index: number) => {
                         return (
                             <MemberDetails 
+                                key={index}
                                 id={member.id}
                                 username={member.username}
                                 password={member.password}

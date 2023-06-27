@@ -2,8 +2,8 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { Member } from "../../interfaces/Member";
 import { useParams } from "react-router-dom";
-import ButtonLink from "../../components/ButtonLink";
-import MemberDetails from "../../components/MemberDetails";
+import ButtonLink from "../../components/common/ButtonLink";
+import MemberDetails from "../../components/member/MemberDetails";
 
 const GET_MEMBER = gql`
     query Member($memberId: Int!) {
