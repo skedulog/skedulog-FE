@@ -25,7 +25,6 @@ const signOut: Menu = {
 const Navbar: React.FC = () => {
     const [menu, setMenu] = useState<Menu[]>([signUp, signIn]);
     const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-    const [isSearching, setIsSearching] = useState<boolean>(false);
 
     useEffect(() => {
         isSignedIn ? setMenu([signOut]) : setMenu([signUp, signIn]);
@@ -52,14 +51,6 @@ const Navbar: React.FC = () => {
         console.log(target.value);
     }
 
-    const handleFocus = () => {
-        setIsSearching(true);
-    }
-
-    const handleBlur = () => {
-        setIsSearching(false);
-    }
-
     return (
         <div className={styles.navbar}>
             <div className={styles.logo}>
@@ -71,12 +62,7 @@ const Navbar: React.FC = () => {
                 </div>
                 <div>
                     <input 
-                        className={styles.search_input} 
-                        type="text" 
-                        placeholder="키워드를 입력하세요" 
-                        onKeyDown={handleSearch} 
-                        onFocus={handleFocus} 
-                        onBlur={handleBlur} 
+                        className={styles.search_input} type="text" placeholder="키워드를 입력하세요" onKeyDown={handleSearch} 
                     />
                 </div>
             </div>
