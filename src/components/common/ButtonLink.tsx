@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-interface buttonProps {
+interface ButtonLinkProps {
     text?: string,
     link: string
 }
 
-const ButtonLink: React.FC<buttonProps> = (props) => {
+const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
 
     return (
         <button>

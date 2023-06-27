@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Member } from "../../interfaces/Member";
-import ButtonLink from "../../components/ButtonLink";
+import ButtonLink from "../../components/common/ButtonLink";
 
 const CREATE_MEMBER = gql`
     mutation Mutation($createMemberUsername: String!, $createMemberPassword: String!, $createMemberFullName: String!) {
