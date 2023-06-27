@@ -1,5 +1,5 @@
 {
-  "name": "skedulog",
+  "name": "skedulog-fe",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "antd": "^5.6.1",
     "graphql": "^16.6.0",
     "nodemon": "^2.0.22",
     "react": "^18.2.0",

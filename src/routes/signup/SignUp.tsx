@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Member } from "../interfaces/Member";
-import ButtonLink from "../components/ButtonLink";
+import { Member } from "../../interfaces/Member";
+import ButtonLink from "../../components/ButtonLink";
 
 const CREATE_MEMBER = gql`
-mutation Mutation($createMemberUsername: String!, $createMemberPassword: String!, $createMemberFullName: String!) {
-    createMember(username: $createMemberUsername, password: $createMemberPassword, fullName: $createMemberFullName) {
-        id
-        username
-        password
-        fullName
+    mutation Mutation($createMemberUsername: String!, $createMemberPassword: String!, $createMemberFullName: String!) {
+        createMember(username: $createMemberUsername, password: $createMemberPassword, fullName: $createMemberFullName) {
+            id
+            username
+            password
+            fullName
+        }
     }
-}`;
+`;
 
 export default function SignUp() {
 
