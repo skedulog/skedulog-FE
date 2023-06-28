@@ -61,9 +61,7 @@ const Navbar: React.FC = () => {
                     <img className={styles.search_icon} src={searchImage} alt="" />
                 </div>
                 <div>
-                    <input 
-                        className={styles.search_input} type="text" placeholder="키워드를 입력하세요" onKeyDown={handleSearch} 
-                    />
+                    <input className={styles.search_input} type="text" placeholder="키워드를 입력하세요" onKeyDown={handleSearch} />
                 </div>
             </div>
             <div className={styles.menu}>
