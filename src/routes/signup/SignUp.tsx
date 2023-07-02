@@ -6,12 +6,26 @@ import { Member } from "../../interfaces/Member";
 import styles from "../../styles/routes/signup/SignUp.module.scss"
 
 const CREATE_MEMBER = gql`
-    mutation Mutation($createMemberUsername: String!, $createMemberPassword: String!, $createMemberFullName: String!) {
-        createMember(username: $createMemberUsername, password: $createMemberPassword, fullName: $createMemberFullName) {
+    mutation Mutation(
+        $createMemberUsername: String!,
+        $createMemberPassword: String!,
+        $createMemberFullName: String!,
+        $createMemberGender: String!,
+        $createMemberDateOfBirth: Date!
+        ) {
+        createMember(
+            username: $createMemberUsername, 
+            password: $createMemberPassword, 
+            fullName: $createMemberFullName,
+            gender: $createMemberGender,
+            dateOfBirth: $createMemberDateOfBirth
+            ) {
             id
             username
             password
-            fullName
+            fullName,
+            gender,
+            dateOfBirth
         }
     }
 `;
@@ -59,6 +73,8 @@ export default function SignUp() {
                     createMemberUsername: data.username, 
                     createMemberPassword: data.password, 
                     createMemberFullName: data.fullName,
+                    createMemberGender: data.gender,
+                    createMemberDateOfBirth: data.dateOfBirth
                 }
             });
         }
