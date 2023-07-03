@@ -12,6 +12,8 @@ const GET_MEMBER = gql`
             username
             password
             fullName
+            gender
+            dateOfBirth
             createdAt
             updatedAt
         }
@@ -63,6 +65,8 @@ export default function MemberView() {
                 username={member.username}
                 password={member.password}
                 fullName={member.fullName}
+                gender={member.gender}
+                dateOfBirth={member.dateOfBirth}
                 createdAt={member.createdAt}
                 updatedAt={member.updatedAt}
             />
