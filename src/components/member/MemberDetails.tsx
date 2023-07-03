@@ -8,6 +8,8 @@ const MemberDetails: React.FC<Member> = (props) => {
             {props.username ? <li>username : {props.username}</li> : null}
             {props.password ? <li>password : {props.password}</li> : null}
             {props.fullName ? <li>fullName : {props.fullName}</li> : null}
+            {props.gender ? <li>gender : {props.gender}</li> : null}
+            {props.dateOfBirth ? <li>dateOfBirth : {props.dateOfBirth.toString()}</li> : null}
             {props.createdAt ? <li>createdAt : {props.createdAt.toString()}</li> : null}
             {props.updatedAt ? <li>updatedAt : {props.updatedAt.toString()}</li> : null}
         </ul>

@@ -11,6 +11,8 @@ const GET_ALL_MEMBERS = gql`
             username
             password
             fullName
+            gender
+            dateOfBirth
             createdAt
             updatedAt
         }
@@ -40,6 +42,8 @@ export default function MemberList() {
                                 username={member.username}
                                 password={member.password}
                                 fullName={member.fullName}
+                                gender={member.gender}
+                                dateOfBirth={member.dateOfBirth}
                                 createdAt={member.createdAt}
                                 updatedAt={member.updatedAt}
                             />
