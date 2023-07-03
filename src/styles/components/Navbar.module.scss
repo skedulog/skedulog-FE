@@ -29,6 +29,7 @@
         border-radius: 25px;
 
         .search_input_container {
+            margin-left: 10px;
             flex-grow: 1;
 
             .search_input {
@@ -42,6 +43,10 @@
             
             .search_input::placeholder {
                 color: #dadada;
+            }
+
+            .search_input:focus {
+                outline: none;
             }
         }
         
