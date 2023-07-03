@@ -102,7 +102,10 @@ export default function SignUp() {
                         ]}
                         validateTrigger={['onBlur']}
                     >
-                        <Input maxLength={10} />
+                        <Input 
+                            placeholder="이름을 입력하여 주세요." 
+                            maxLength={10} 
+                        />
                     </Form.Item>
                     <Form.Item
                         name="gender"
@@ -135,7 +138,10 @@ export default function SignUp() {
                             }
                         ]}
                     >
-                        <DatePicker className={styles.date_picker}/>
+                        <DatePicker 
+                            placeholder="생년월일을 선택하여 주세요." 
+                            className={styles.date_picker}
+                        />
                     </Form.Item>
                     <Form.Item 
                         name="username" 
@@ -155,7 +161,9 @@ export default function SignUp() {
                         ]}
                         validateTrigger={['onBlur']}
                     >
-                        <Input
+                        <Input 
+                            placeholder="아이디를 입력하여 주세요" 
+                            maxLength={20}
                         />
                     </Form.Item>
                     <Form.Item 
@@ -178,6 +186,8 @@ export default function SignUp() {
                     >
                         <Input
                             type="password"
+                            placeholder="비밀번호를 입력하여 주세요" 
+                            maxLength={20}
                         />
                     </Form.Item>
                     <Form.Item 
@@ -196,6 +206,8 @@ export default function SignUp() {
                     >
                         <Input
                             type="password"
+                            placeholder="비밀번호 확인을 입력하여 주세요" 
+                            maxLength={20}
                         />
                     </Form.Item>
                     <Form.Item>
