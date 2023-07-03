@@ -10,24 +10,24 @@ const signUp: Menu = {
     text: "회원가입"
 }
 
-const signIn: Menu = {
-    key: "signIn",
+const logIn: Menu = {
+    key: "logIn",
     link: "/member/list",
     text: "로그인"
 }
 
-const signOut: Menu = {
-    key: "signOut",
+const logOut: Menu = {
+    key: "logOut",
     link: "/member/list",
     text: "로그아웃"
 }
 
 const Navbar: React.FC = () => {
-    const [menu, setMenu] = useState<Menu[]>([signUp, signIn]);
+    const [menu, setMenu] = useState<Menu[]>([signUp, logIn]);
     const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        isSignedIn ? setMenu([signOut]) : setMenu([signUp, signIn]);
+        isSignedIn ? setMenu([logOut]) : setMenu([signUp, logIn]);
     }, [isSignedIn])
 
     const handleMouseEnter = (e: React.MouseEvent) => {
@@ -41,14 +41,12 @@ const Navbar: React.FC = () => {
     };
 
     const handleSearch = (e: React.KeyboardEvent) => {
-        if (e.key !== 'Enter') {
-            return false;
+        if (e.key === 'Enter') {
+            const target = e.target as HTMLInputElement;
+
+            // 검색 처리 로직
+            console.log(target.value);
         }
-
-        const target = e.target as HTMLInputElement;
-
-        // 검색 처리 로직
-        console.log(target.value);
     }
 
     return (
@@ -60,7 +58,7 @@ const Navbar: React.FC = () => {
                 <div>
                     <img className={styles.search_icon} src={searchImage} alt="" />
                 </div>
-                <div>
+                <div className={styles.search_input_container}>
                     <input className={styles.search_input} type="text" placeholder="키워드를 입력하세요" onKeyDown={handleSearch} />
                 </div>
             </div>
