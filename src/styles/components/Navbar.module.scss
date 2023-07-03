@@ -1,3 +1,5 @@
+
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -10,8 +12,8 @@
         margin-right: auto;
         margin-left: 50px;
 
-        a {
-            text-decoration: none;
+        img {
+            width: 120px;
         }
     }
 
@@ -67,18 +69,15 @@
         display: flex;
         justify-content: space-between;
 
-        .menuItem {
+        .menu_item {
             position: relative;
             margin-right: 10px;
             text-decoration: none;
-            color: black;
-            font-weight: lighter;
-            font-size: 15px;
             margin-inline: 20px;
         }
         
-        .menuItem::before,
-        .menuItem::after {
+        .menu_item::before,
+        .menu_item::after {
             content: '';
             position: absolute;
             bottom: -3px;
@@ -89,20 +88,26 @@
             top:-19px;
         }
         
-        .menuItem::before {
+        .menu_item::before {
             left: 50%;
             transform: translateX(-50%);
         }
         
-        .menuItem::after {
+        .menu_item::after {
             right: 50%;
             transform: translateX(50%);
         }
         
-        .menuItem:hover::before,
-        .menuItem:hover::after {
+        .menu_item:hover::before,
+        .menu_item:hover::after {
             width: 100%;
             top:-19px;
+        }
+
+        .menu_item_text {
+            color: black;
+            font-weight: lighter;
+            font-size: 15px;
         }
     }
 }

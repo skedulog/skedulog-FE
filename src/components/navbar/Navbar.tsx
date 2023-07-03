@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "../../interfaces/Menu";
+import { Typography } from "antd"; 
+import logo from "../../images/skedulog_no_bg_underline.png";
 import searchImage from "../../images/magnifier.png";
 import styles from "../../styles/components/Navbar.module.scss";
 
@@ -24,11 +26,13 @@ const logOut: Menu = {
 
 const Navbar: React.FC = () => {
     const [menu, setMenu] = useState<Menu[]>([signUp, logIn]);
-    const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+    const { Text } = Typography;
 
     useEffect(() => {
-        isSignedIn ? setMenu([logOut]) : setMenu([signUp, logIn]);
-    }, [isSignedIn])
+        isLoggedIn ? setMenu([logOut]) : setMenu([signUp, logIn]);
+    }, [isLoggedIn])
 
     const handleMouseEnter = (e: React.MouseEvent) => {
         const target = e.target as HTMLAnchorElement;
@@ -52,7 +56,9 @@ const Navbar: React.FC = () => {
     return (
         <div className={styles.navbar}>
             <div className={styles.logo}>
-                <Link to="/"><span style={{fontWeight:"bolder", fontSize:"25px", fontStyle:"oblique", color:"#1677ff"}}>SKEDULOG</span></Link>
+                <Link to="/">
+                    <img src={logo} />
+                </Link>
             </div>
             <div className={styles.search_box}>
                 <div>
@@ -64,7 +70,13 @@ const Navbar: React.FC = () => {
             </div>
             <div className={styles.menu}>
                 {menu.map((each: Menu, index: number) => {
-                    return <Link key={index} to={each.link} className={styles.menuItem} onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>{each.text}</Link>
+                    return (
+                        <Link key={index} to={each.link} className={styles.menu_item} onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                            <Text className={styles.menu_item_text}>
+                                {each.text}
+                            </Text>
+                        </Link>
+                    )
                 })}
             </div>
         </div>
