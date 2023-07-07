@@ -5,7 +5,7 @@ import styles from "../../styles/routes/main/MainView.module.scss";
 import { Link } from "react-router-dom";
 
 export default function MainView() {
-
+    
     const { Title, Text } = Typography;
     const [hovered, setHovered] = useState(false);
 

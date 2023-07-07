@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "../../interfaces/Menu";
-import { Typography } from "antd"; 
+import { Typography } from "antd";
+import { useDispatch, useSelector } from 'react-redux';
+import { removeCookieToken } from "../../cookie/Cookie";
+import { DELETE_TOKEN } from "../../redux/Auth";
+import { useNavigate } from "react-router-dom";
 import logo from "../../images/skedulog_no_bg_underline.png";
 import searchImage from "../../images/magnifier.png";
 import styles from "../../styles/components/Navbar.module.scss";
+import { RootState } from "../../interfaces/RootState";
+import useCheckToken from "../../hooks/useCheckToken";
 
 const signUp: Menu = {
     key: "signUp",
@@ -14,25 +20,39 @@ const signUp: Menu = {
 
 const logIn: Menu = {
     key: "logIn",
-    link: "/member/list",
+    link: "/login",
     text: "로그인"
 }
 
 const logOut: Menu = {
     key: "logOut",
-    link: "/member/list",
+    link: "/",
     text: "로그아웃"
 }
 
-const Navbar: React.FC = () => {
-    const [menu, setMenu] = useState<Menu[]>([signUp, logIn]);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+const member: Menu = {
+    key: "member",
+    link: "/member/list",
+    text: "회원목록"
+}
 
+const Navbar: React.FC = () => {
+
+    const [menu, setMenu] = useState<Menu[]>([signUp, logIn]);
+    const isAuthenticated = useSelector((state: RootState) => state.authToken.authenticated)
+    const { checkAuth } = useCheckToken();
     const { Text } = Typography;
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        isLoggedIn ? setMenu([logOut]) : setMenu([signUp, logIn]);
-    }, [isLoggedIn])
+        checkAuth();
+    }, [checkAuth])
+
+    useEffect(() => {
+        isAuthenticated ? setMenu([logOut,member]) : setMenu([signUp, logIn]);
+    }, [isAuthenticated])
 
     const handleMouseEnter = (e: React.MouseEvent) => {
         const target = e.target as HTMLAnchorElement;
@@ -53,6 +73,12 @@ const Navbar: React.FC = () => {
         }
     }
 
+    const handleLogOut = () => {
+        dispatch(DELETE_TOKEN());
+        removeCookieToken();
+        navigate('/');
+    }
+
     return (
         <div className={styles.navbar}>
             <div className={styles.logo}>
@@ -71,7 +97,14 @@ const Navbar: React.FC = () => {
             <div className={styles.menu}>
                 {menu.map((each: Menu, index: number) => {
                     return (
-                        <Link key={index} to={each.link} className={styles.menu_item} onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                        <Link 
+                            key={index} 
+                            to={isAuthenticated && each.key === 'logOut' ? '' : each.link} 
+                            className={styles.menu_item} 
+                            onMouseOver={handleMouseEnter} 
+                            onMouseLeave={handleMouseLeave}
+                            onClick={isAuthenticated && each.key === 'logOut' ? handleLogOut : undefined}
+                        >
                             <Text className={styles.menu_item_text}>
                                 {each.text}
                             </Text>

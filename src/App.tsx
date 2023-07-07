@@ -1,19 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
+import LogIn from './routes/login/LogIn';
 import MainView from './routes/main/MainView';
-import MemberView from "./routes/member/MemberView";
 import MemberList from "./routes/member/MemberList";
 import MemberUpdate from "./routes/member/MemberUpdate";
-import SignUp from "./routes/signup/SignUp";
+import MemberView from "./routes/member/MemberView";
 import Navbar from './components/navbar/Navbar';
+import SignUp from "./routes/signup/SignUp";
 import styles from "./styles/common/Common.module.scss";
 
 export default function App() {
+
   return (
     <div className={styles.app_container}>
       <Navbar />
       <Routes>
         // 메인 페이지
         <Route path="/" element={<MainView />} />
+
+        // 로그인 페이지
+        <Route path="/login" element={<LogIn />} />
 
         // 회원 가입
         <Route path="/signup" element={<SignUp />} />
