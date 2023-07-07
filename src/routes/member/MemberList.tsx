@@ -20,6 +20,7 @@ const GET_ALL_MEMBERS = gql`
 `;
 
 export default function MemberList() {
+
     const [memberList, setMemberList] = useState<Member[] | null>([]);
 
     const { data, loading } = useQuery(GET_ALL_MEMBERS);
@@ -28,7 +29,7 @@ export default function MemberList() {
         if (!loading) {
             setMemberList(data.allMembers);
         }
-    }, [data])
+    }, [data, loading])
 
     return (
         <div>

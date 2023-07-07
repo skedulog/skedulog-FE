@@ -5,8 +5,8 @@ import { Button, Form, Input, Select, DatePicker } from "antd"
 import { Member } from "../../interfaces/Member";
 import styles from "../../styles/routes/signup/SignUp.module.scss"
 
-const CREATE_MEMBER = gql`
-    mutation Mutation(
+const SIGN_UP = gql`
+    mutation SignUp(
         $createMemberUsername: String!,
         $createMemberPassword: String!,
         $createMemberFullName: String!,
@@ -32,7 +32,7 @@ const CREATE_MEMBER = gql`
 
 export default function SignUp() {
 
-    const [createMember, { data }] = useMutation(CREATE_MEMBER);
+    const [createMember, { data }] = useMutation(SIGN_UP);
 
     const [form] = useForm();
 
@@ -86,7 +86,7 @@ export default function SignUp() {
     
     return (
         <div className={styles.sign_up_form_container}>
-            <div className={styles.page_title}>
+            <div>
                 <h1>회원가입</h1>
             </div>
             <div className={styles.sign_up_form}>
@@ -152,8 +152,8 @@ export default function SignUp() {
                                 message: "아이디는 필수입력 항목입니다."
                             },
                             {
-                            pattern: /^[A-Za-z0-9]+$/,
-                            message: '아이디는 영어 대소문자와 숫자로만 이루어져야 합니다.'
+                                pattern: /^[A-Za-z0-9]+$/,
+                                message: '아이디는 영어 대소문자와 숫자로만 이루어져야 합니다.'
                             },
                             {
                                 validator: validateUsername,
