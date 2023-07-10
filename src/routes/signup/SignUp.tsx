@@ -4,6 +4,7 @@ import { useForm } from "antd/es/form/Form";
 import { Button, Form, Input, Select, DatePicker } from "antd"
 import { Member } from "../../interfaces/Member";
 import styles from "../../styles/routes/signup/SignUp.module.scss"
+import { useNavigate } from "react-router";
 
 const SIGN_UP = gql`
     mutation SignUp(
@@ -12,19 +13,19 @@ const SIGN_UP = gql`
         $createMemberFullName: String!,
         $createMemberGender: String!,
         $createMemberDateOfBirth: Date!
-        ) {
+    ) {
         createMember(
             username: $createMemberUsername, 
             password: $createMemberPassword, 
             fullName: $createMemberFullName,
             gender: $createMemberGender,
             dateOfBirth: $createMemberDateOfBirth
-            ) {
+        ) {
             id
             username
             password
-            fullName,
-            gender,
+            fullName
+            gender
             dateOfBirth
         }
     }
@@ -35,10 +36,11 @@ export default function SignUp() {
     const [createMember, { data }] = useMutation(SIGN_UP);
 
     const [form] = useForm();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (data !== undefined) {
-            location.href="/member/"+data.createMember.id;
+            navigate('/');
         }
     }, [data]);
 
