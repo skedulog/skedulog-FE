@@ -47,4 +47,11 @@ export const handleGraphQLError = (err: ResponseError) => {
       removeCookieToken();
     }
   }
+
+  if (code === 'MEMBER_ID_NULL') {
+    alert('회원정보가 없습니다. 다시 로그인 해주세요.');
+    store.dispatch(DELETE_TOKEN);
+    removeCookieToken();
+    location.href='/login'
+  }
 }

@@ -1,0 +1,13 @@
+.member_update_form_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .member_update_form {
+        width: 25rem;
+    }
+}
+
+.date_picker {
+    width:100%;
+}

@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/member/:id" element={<MemberView />} />
 
         // 회원 정보 수정
-        <Route path="/member/update/:id" element={<MemberUpdate />} />
+        <Route path="/member" element={<MemberUpdate />} />
       </Routes>
     </div>
   )

@@ -32,8 +32,8 @@ const logOut: Menu = {
 
 const member: Menu = {
     key: "member",
-    link: "/member/list",
-    text: "회원목록"
+    link: "/member",
+    text: "회원정보"
 }
 
 const Navbar: React.FC = () => {
