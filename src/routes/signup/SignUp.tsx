@@ -81,7 +81,7 @@ export default function SignUp() {
     }
 
     const handleFinishFailed = (error: any) => {
-        console.log('[ERROR]' + error);
+        console.log('[ERROR]', error);
     }
     
     return (
@@ -176,7 +176,7 @@ export default function SignUp() {
                             },
                             {
                                 pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                                message: '비밀번호는 대소문자, 숫자, 특수문자를 모두 포함하여야 합니다.'
+                                message: '비밀번호는 영어, 숫자, 특수문자를 모두 포함하여야 합니다.'
                             },
                             {
                                 validator: validatePassword,

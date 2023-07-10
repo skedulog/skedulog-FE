@@ -31,7 +31,7 @@ export default function LogIn() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (data) {console.log(data);
+        if (data) {
             const response = JSON.parse(data.login);
             if (response.ok) {
                 setFailed(false);
