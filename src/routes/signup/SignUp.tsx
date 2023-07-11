@@ -5,6 +5,7 @@ import { Button, Form, Input, Select, DatePicker } from "antd"
 import { Member } from "../../interfaces/Member";
 import styles from "../../styles/routes/signup/SignUp.module.scss"
 import { useNavigate } from "react-router";
+import PageTitle from "../../components/pagetitle/PageTitle"
 
 const SIGN_UP = gql`
     mutation SignUp(
@@ -88,9 +89,7 @@ export default function SignUp() {
     
     return (
         <div className={styles.sign_up_form_container}>
-            <div>
-                <h1>회원가입</h1>
-            </div>
+            <PageTitle title="회원가입" />
             <div className={styles.sign_up_form}>
                 <Form form={form} name="signUpForm" layout="vertical" onFinish={handleCreateMember} onFinishFailed={handleFinishFailed}>
                     <Form.Item 
