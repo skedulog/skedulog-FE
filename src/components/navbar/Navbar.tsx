@@ -11,6 +11,7 @@ import searchImage from "../../images/magnifier.png";
 import styles from "../../styles/components/Navbar.module.scss";
 import { RootState } from "../../interfaces/RootState";
 import useCheckToken from "../../hooks/useCheckToken";
+import { useApolloClient } from "@apollo/client";
 
 const signUp: Menu = {
     key: "signUp",
@@ -42,6 +43,7 @@ const Navbar: React.FC = () => {
     const isAuthenticated = useSelector((state: RootState) => state.authToken.authenticated)
     const { checkAuth } = useCheckToken();
     const { Text } = Typography;
+    const client = useApolloClient();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -76,6 +78,8 @@ const Navbar: React.FC = () => {
     const handleLogOut = () => {
         dispatch(DELETE_TOKEN());
         removeCookieToken();
+        client.cache.evict({ id: 'ROOT_QUERY', fieldName: 'member' })
+        client.cache.gc();
         navigate('/');
     }
 
