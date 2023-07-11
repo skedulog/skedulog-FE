@@ -24,13 +24,13 @@ export default function MainView() {
                     <img src={logo} />
                 </div>
                 <div className={styles.main_text}>
-                    <Title level={1}>효율적인 스케줄 관리!</Title>
+                    <Title level={1}>재미있고 효율적인 스케줄 관리!</Title>
                     <Space direction="vertical">
-                        <Text type="secondary" className={styles.bullet_points}>일별 일정 관리</Text>
-                        <Text type="secondary" className={styles.bullet_points}>친구들과 일정 공유</Text>
+                        <Text type="secondary" className={styles.bullet_points}>일별 스케줄 관리</Text>
+                        <Text type="secondary" className={styles.bullet_points}>친구들과 스케줄 공유</Text>
                         <Text type="secondary" className={styles.bullet_points}>키워드로 스케줄 관리</Text>
                         <Text type="secondary" className={styles.bullet_points}>키워드별 통계</Text>
-                        <Text type="secondary" className={styles.bullet_points}>인기 키워드 및 연관 키워드</Text>
+                        <Text type="secondary" className={styles.bullet_points}>인기 키워드 및 연관 키워드 검색</Text>
                     </Space>
                 </div>
                 <div className={styles.main_button}>
