@@ -41,7 +41,7 @@ export default function SignUp() {
 
     useEffect(() => {
         if (data !== undefined) {
-            navigate('/');
+            navigate('/login');
         }
     }, [data]);
 
