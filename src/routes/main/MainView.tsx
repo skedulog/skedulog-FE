@@ -34,7 +34,16 @@ export default function MainView() {
                     </Space>
                 </div>
                 <div className={styles.main_button}>
-                    <Button size="large" className={hovered ? styles.hovered_button : ""} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><Link to="/signup">회원가입</Link></Button>
+                    <Button 
+                        size="large" 
+                        className={hovered ? styles.hovered_button : ""} 
+                        onMouseEnter={handleMouseEnter} 
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <Link to="/signup">
+                            회원가입
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </div>
