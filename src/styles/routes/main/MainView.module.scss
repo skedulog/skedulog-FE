@@ -9,25 +9,22 @@
 
     .main_content {
         position: absolute;
-        width: 30%;
+        width: 35%;
         left: 60%;
-        margin-top: 150px;
+        margin-top: 12rem;
         display: flex;
         flex-direction: column;
 
         div {
             text-align: center;
-
-            .bullet_points {
-                font-weight: 600;
-            }
         }
 
         .main_logo {
-            margin-left: -50px;
+            display: flex;
+            justify-content: center;
 
             img {
-                width: 700px;
+                width: 37rem;
             }
         }
 
@@ -50,11 +47,10 @@
                 z-index: 1;
                 transition: color 0.01s, transform 0.3s;
                 transform-origin: center;
-                height: 100%;
             }
             
             .hovered_button::before {
-                content: "";
+            content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -83,7 +79,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - 62px);
+    height: 910px;
     z-index: -1;
     background-image: inherit;
     background-size: cover;
@@ -91,3 +87,7 @@
     background-repeat: no-repeat;
 }
 
+
+.bullet_points {
+    font-weight: 600;
+}
