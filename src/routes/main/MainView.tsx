@@ -24,7 +24,7 @@ export default function MainView() {
                     <img src={logo} />
                 </div>
                 <div className={styles.main_text}>
-                    <Title level={1}>스케줄을 효율적으로 관리하세요!</Title>
+                    <Title level={1}>효율적인 스케줄 관리!</Title>
                     <Space direction="vertical">
                         <Text type="secondary" className={styles.bullet_points}>일별 일정 관리</Text>
                         <Text type="secondary" className={styles.bullet_points}>친구들과 일정 공유</Text>
