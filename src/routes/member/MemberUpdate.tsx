@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { Member } from "../../interfaces/Member";
 import { useForm } from "antd/es/form/Form";
 import { Button, DatePicker, Form, Input, Select } from "antd";
+import { useApolloClient } from "@apollo/client";
 import styles from "../../styles/routes/member/MemberUpdate.module.scss"
 import dayjs from "dayjs";
-import { useApolloClient } from "@apollo/client";
+import PageTitle from "../../components/pagetitle/PageTitle";
 
 const GET_MEMBER = gql`
     query Member {
@@ -132,9 +133,7 @@ export default function MemberUpdate() {
 
     return (
         <div className={styles.member_update_form_container}>
-            <div>
-                <h1>회원정보</h1>
-            </div>
+            <PageTitle title="회원정보" />
             <div className={styles.member_update_form}>
                 <Form 
                     requiredMark={false} 

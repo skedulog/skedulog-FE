@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { setRefreshToken } from "../../cookie/Cookie";
 import { SET_TOKEN } from "../../redux/Auth";
+import PageTitle from '../../components/pagetitle/PageTitle';
 
 const LOG_IN = gql`
     mutation LogIn(
@@ -54,9 +55,7 @@ export default function LogIn() {
 
     return (
         <div className={styles.log_in_form_container}>
-            <div>
-                <h1>로그인</h1>
-            </div>
+            <PageTitle title='로그인' />
             <div className={styles.log_in_form}>
                 <Form form={form} name="logInForm" layout="vertical" onFinish={handleFinish} onFinishFailed={handleFinishFailed}>
                     <Form.Item
