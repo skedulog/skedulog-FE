@@ -6,23 +6,17 @@
     position: relative;
     display: flex;
     justify-content: center;
-    height: 50rem;
-    width: 90rem;
 
     .main_content {
         position: absolute;
         width: 30%;
         left: 60%;
-        margin-top: 8%;
+        margin-top: 150px;
         display: flex;
         flex-direction: column;
 
         div {
             text-align: center;
-
-            .bullet_points {
-                font-weight: 600;
-            }
         }
 
         .main_logo {
@@ -30,19 +24,19 @@
             justify-content: center;
 
             img {
-                width: 35rem;
+                width: 40rem;
             }
         }
 
         .main_button {
-            margin-top: 3rem;
+            margin-top: 50px;
 
             .hovered_button {
                 position: relative;
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
-                padding: 0.7rem 1.3rem;
+                padding: 12px 24px;
                 background-color: #1668ff;
                 color: white;
                 font-size: 16px;
@@ -51,13 +45,12 @@
                 cursor: pointer;
                 overflow: hidden;
                 z-index: 1;
-                transition: color 0.01s, transform 0.1s;
+                transition: color 0.01s, transform 0.3s;
                 transform-origin: center;
-                height: 100%;
             }
             
             .hovered_button::before {
-                content: "";
+            content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -86,7 +79,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - 62px);
+    height: 910px;
     z-index: -1;
     background-image: inherit;
     background-size: cover;
@@ -94,3 +87,7 @@
     background-repeat: no-repeat;
 }
 
+
+.bullet_points {
+    font-weight: 600;
+}
