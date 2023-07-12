@@ -153,7 +153,7 @@ const MemberUpdate: React.FC = () => {
         console.log('[ERROR]', error);
     }
 
-    const handleLeave = () => {
+    const handleDelete = () => {
         if (window.confirm("탈퇴 하시겠습니까?")) {
             deleteMember();
         }
@@ -285,7 +285,7 @@ const MemberUpdate: React.FC = () => {
                             </Form.Item>
                             <Form.Item>
                                 <Button block size="large" type="primary" htmlType="submit">회원정보 수정</Button> 
-                                <Button block danger size="large" type="primary" onClick={handleLeave}>회원 탈퇴</Button> 
+                                <Button block danger size="large" type="primary" onClick={handleDelete}>회원 탈퇴</Button> 
                             </Form.Item>
                         </Form>
                     </div>

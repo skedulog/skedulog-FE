@@ -32,9 +32,20 @@ const SIGN_UP = gql`
     }
 `;
 
+const CHECK_USERNAME_DUPLICACY = gql`
+    mutation CheckUsernameDuplicacy(
+        $username: String!
+    ) {
+        checkUsernameDuplicacy(
+            username: $username
+        )
+    }
+`;
+
 const SignUp: React.FC = () => {
 
     const [createMember, { data }] = useMutation(SIGN_UP);
+    const [checkUsernameDuplicacy] = useMutation(CHECK_USERNAME_DUPLICACY);
 
     const [form] = useForm();
     const navigate = useNavigate();
@@ -45,18 +56,25 @@ const SignUp: React.FC = () => {
         }
     }, [data]);
 
-    const validateUsername = (_: object, username: string) => {
+    const validateUsername = async (_: object, username: string) => {
         if (username?.length < 6 || username?.length > 20) {
-            return Promise.reject(new Error('아이디는 6자 이상 20자 이하여야 합니다.'))
+            return Promise.reject(new Error('아이디는 6자 이상 20자 이하여야 합니다.'));
         }
-        // 아이디 중복검사 로직 추가
+
+        if (username) {        
+            const { data } = await checkUsernameDuplicacy({ variables: { username } });
+
+            if (data?.checkUsernameDuplicacy) {
+                return Promise.reject(new Error('중복된 아이디 입니다.'));
+            }
+        }
 
         return Promise.resolve();
     }
 
     const validatePassword = (_: object, password: string) => {
         if (password?.length < 8 || password?.length > 20) {
-            return Promise.reject(new Error('비밀번호는는 8자 이상 20자 이하여야 합니다.'))
+            return Promise.reject(new Error('비밀번호는는 8자 이상 20자 이하여야 합니다.'));
         }
         return Promise.resolve();
     }
@@ -64,7 +82,7 @@ const SignUp: React.FC = () => {
     const validateConfirmPassword = (_: object, confirmPassword: string) => {
         const password = form.getFieldValue('password');
         if (confirmPassword !== password) {
-            return Promise.reject(new Error('비밀번호가 일치하지 않습니다.'))
+            return Promise.reject(new Error('비밀번호가 일치하지 않습니다.'));
         }
         return Promise.resolve();
     }
