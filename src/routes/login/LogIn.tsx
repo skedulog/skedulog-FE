@@ -1,4 +1,4 @@
-import styles from '../../styles/routes/login/LogIn.module.scss'
+import styles from './LogIn.module.scss'
 import { LogIn as LogInType } from '../../interfaces/LogIn';
 import { useForm } from "antd/es/form/Form";
 import { Button, Form, Input, Space, Typography } from "antd"
@@ -22,7 +22,7 @@ const LOG_IN = gql`
     }
 `;
 
-export default function LogIn() {
+const LogIn: React.FC = () => {
 
     const [failed, setFailed] = useState<boolean>(false);
     const [logIn, { data }] = useMutation(LOG_IN);
@@ -106,3 +106,5 @@ export default function LogIn() {
         </div>
     )
 }
+
+export default LogIn;

@@ -8,7 +8,7 @@ import { DELETE_TOKEN } from "../../redux/Auth";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/skedulog_no_bg_underline.png";
 import searchImage from "../../images/magnifier.png";
-import styles from "../../styles/components/Navbar.module.scss";
+import styles from "./Navbar.module.scss";
 import { RootState } from "../../interfaces/RootState";
 import useCheckToken from "../../hooks/useCheckToken";
 import { useApolloClient } from "@apollo/client";
