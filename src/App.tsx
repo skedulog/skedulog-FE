@@ -3,6 +3,7 @@ import LogIn from './routes/login/LogIn';
 import MainView from './routes/main/MainView';
 import MemberUpdate from "./routes/member/MemberUpdate";
 import Navbar from './components/navbar/Navbar';
+import PassWordCheck from './routes/passwordcheck/PasswordCheck';
 import SignUp from "./routes/signup/SignUp";
 import styles from "./App.module.scss";
 
@@ -22,7 +23,10 @@ const App: React.FC = () => {
         <Route path="/signup" element={<SignUp />} />
 
         // 회원 정보 수정
-        <Route path="/member" element={<MemberUpdate />} />
+        <Route path="/member/me" element={<MemberUpdate />} />
+
+        // 비밀번호 확인
+        <Route path="/password/check" element={<PassWordCheck />} />
       </Routes>
     </div>
   )

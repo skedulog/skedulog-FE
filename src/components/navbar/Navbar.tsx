@@ -33,7 +33,7 @@ const logOut: Menu = {
 
 const member: Menu = {
     key: "member",
-    link: "/member",
+    link: "/password/check",
     text: "회원정보"
 }
 
