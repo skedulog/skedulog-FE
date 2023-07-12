@@ -1,10 +1,10 @@
 import { Space, Typography, Button } from "antd";
 import { useState } from "react";
 import logo from "../../images/skedulog_no_bg_underline.png"
-import styles from "../../styles/routes/main/MainView.module.scss";
+import styles from "./MainView.module.scss";
 import { Link } from "react-router-dom";
 
-export default function MainView() {
+const MainView: React.FC = () => {
     
     const { Title, Text } = Typography;
     const [hovered, setHovered] = useState(false);
@@ -49,3 +49,5 @@ export default function MainView() {
         </div>
     )
 }
+
+export default MainView;

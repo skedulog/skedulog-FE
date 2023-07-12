@@ -3,7 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useForm } from "antd/es/form/Form";
 import { Button, Form, Input, Select, DatePicker } from "antd"
 import { Member } from "../../interfaces/Member";
-import styles from "../../styles/routes/signup/SignUp.module.scss"
+import styles from "./SignUp.module.scss"
 import { useNavigate } from "react-router";
 import PageTitle from "../../components/pagetitle/PageTitle"
 
@@ -32,7 +32,7 @@ const SIGN_UP = gql`
     }
 `;
 
-export default function SignUp() {
+const SignUp: React.FC = () => {
 
     const [createMember, { data }] = useMutation(SIGN_UP);
 
@@ -219,3 +219,5 @@ export default function SignUp() {
         </div>
     );
 }
+
+export default SignUp;

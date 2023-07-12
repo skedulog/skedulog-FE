@@ -4,7 +4,7 @@ import { Member } from "../../interfaces/Member";
 import { useForm } from "antd/es/form/Form";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useApolloClient } from "@apollo/client";
-import styles from "../../styles/routes/member/MemberUpdate.module.scss"
+import styles from "./MemberUpdate.module.scss"
 import dayjs from "dayjs";
 import PageTitle from "../../components/pagetitle/PageTitle";
 
@@ -38,7 +38,7 @@ const UPDATE_MEMBER = gql`
     }  
 `;
 
-export default function MemberUpdate() {
+const MemberUpdate: React.FC = () => {
     const [form] = useForm();
     const [member, setMember] = useState<Member>();
     const client = useApolloClient();
@@ -261,3 +261,5 @@ export default function MemberUpdate() {
         </div>
     );
 }
+
+export default MemberUpdate;
