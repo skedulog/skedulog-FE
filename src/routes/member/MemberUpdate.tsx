@@ -4,9 +4,13 @@ import { Member } from "../../interfaces/Member";
 import { useForm } from "antd/es/form/Form";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useApolloClient } from "@apollo/client";
+import { removeCookieToken } from "../../cookie/Cookie";
+import { DELETE_TOKEN } from "../../redux/Auth";
 import styles from "./MemberUpdate.module.scss"
 import dayjs from "dayjs";
 import PageTitle from "../../components/pagetitle/PageTitle";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const GET_MEMBER = gql`
     query Member {
@@ -38,10 +42,18 @@ const UPDATE_MEMBER = gql`
     }  
 `;
 
+const DELETE_MEMBER = gql`
+    mutation DeleteMember {
+        deleteMember
+    }
+`;
+
 const MemberUpdate: React.FC = () => {
     const [form] = useForm();
     const [member, setMember] = useState<Member>();
     const client = useApolloClient();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const worker = {
         ...member,
@@ -51,8 +63,8 @@ const MemberUpdate: React.FC = () => {
     };
 
     const { data:getMemberData, loading: getMemberLoading } = useQuery(GET_MEMBER);
-
     const [updateMember, { data: updateMemberData }] = useMutation(UPDATE_MEMBER);
+    const [deleteMember, { data: deleteMemberData }] = useMutation(DELETE_MEMBER);
 
     useEffect(() => {
         if (getMemberData) {
@@ -65,6 +77,20 @@ const MemberUpdate: React.FC = () => {
             setMember(updateMemberData.updateMember);
         }
     }, [updateMemberData])
+
+    useEffect(() => {
+        if (deleteMemberData) {
+            if (deleteMemberData.deleteMember === true) {
+                dispatch(DELETE_TOKEN());
+                removeCookieToken();
+                client.cache.evict({ id: 'ROOT_QUERY', fieldName: 'member' })
+                client.cache.gc();
+                navigate('/');
+            } else {
+                alert("알 수 없는 오류가 발생 하였습니다.");
+            }
+        }
+    }, [deleteMemberData])
 
     const validatePassword = (_: object, password: string) => {
 
@@ -127,138 +153,145 @@ const MemberUpdate: React.FC = () => {
         console.log('[ERROR]', error);
     }
 
-    if (getMemberLoading || member === undefined) {
-        return <></>;
+    const handleLeave = () => {
+        if (window.confirm("탈퇴 하시겠습니까?")) {
+            deleteMember();
+        }
     }
 
     return (
-        <div className={styles.member_update_form_container}>
-            <PageTitle title="회원정보" />
-            <div className={styles.member_update_form}>
-                <Form 
-                    requiredMark={false} 
-                    form={form} 
-                    name="memberUpdateForm" 
-                    layout="vertical" 
-                    initialValues={worker} 
-                    onFinish={handleUpdateMember} 
-                    onFinishFailed={handleUpdateMemberFailed}
-                >
-                    <Form.Item 
-                        name="fullName" 
-                        label="이름" 
-                        rules={[
-                            {
-                                required: true,
-                                message: "이름은 필수입력 항목입니다."
-                            }
-                        ]}
-                        validateTrigger={['onBlur']}
-                    >
-                        <Input 
-                            placeholder="이름을 입력하여 주세요." 
-                            maxLength={10} 
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="gender"
-                        label="성별"
-                        rules={[
-                            { 
-                                required: true, 
-                                message: '성별은 필수입력 항목입니다.' 
-                            }
-                        ]}
-                        validateTrigger={['onBlur']}
-                    >
-                        <Select
-                            placeholder="성별을 선택하여 주세요."
-                            options={[
-                                {value: "MALE", label: "남성"},
-                                {value: "FEMALE", label: "여성"},
-                                {value: "OTHER", label: "선택안함"},
-                            ]}
-                        />
-                    </Form.Item>
-                    <Form.Item 
-                        name="dateOfBirth" 
-                        label="생년월일" 
-                        rules={[
-                            {
-                                type: 'object' as const, 
-                                required: true, 
-                                message: '생년월일은 필수입력 항목입니다.'
-                            }
-                        ]}
-                    >
-                        <DatePicker 
-                            placeholder="생년월일을 선택하여 주세요." 
-                            className={styles.date_picker}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="username"
-                        label="아이디"
-                        rules={[
-                            {
-                                required: true
-                            }
-                        ]}
-                    >
-                        <Input
-                            readOnly
-                        />
-                    </Form.Item>
-                    <Form.Item 
-                        name="password" 
-                        label="비밀번호" 
-                        rules={[
-                            {
-                                validator: validatePassword,
-                            }
-                        ]}
-                        validateTrigger={['onBlur']}
-                    >
-                        <Input
-                            type="password"
-                            placeholder="비밀번호를 입력하여 주세요" 
-                            maxLength={20}
-                            onClick={() => {
-                                const password = form.getFieldValue('password');
-                                if (password === '********') {
-                                    form.setFieldValue('password', '');
-                                }
-                            }}
-                        />
-                    </Form.Item>
-                    <Form.Item 
-                        name="confirmPassword" 
-                        label="비밀번호 확인" 
-                        rules={[
-                            {
-                                validator: validateConfirmPassword,
-                            }
-                        ]}
-                        validateTrigger={['onBlur']}
-                    >
-                        <Input
-                            type="password"
-                            placeholder="비밀번호 확인을 입력하여 주세요" 
-                            maxLength={20}
-                            onClick={() => {
-                                const confirmPassword = form.getFieldValue('confirmPassword');
-                                if (confirmPassword === '********') {
-                                    form.setFieldValue('confirmPassword', '');
-                                }
-                            }}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button block size="large" type="primary" htmlType="submit">회원정보 수정</Button> 
-                    </Form.Item>
-                </Form>
-            </div>
-        </div>
+        <>
+            {getMemberLoading || !member ? <></> : (
+                <div className={styles.member_update_form_container}>
+                    <PageTitle title="회원정보" />
+                    <div className={styles.member_update_form}>
+                        <Form 
+                            requiredMark={false} 
+                            form={form} 
+                            name="memberUpdateForm" 
+                            layout="vertical" 
+                            initialValues={worker} 
+                            onFinish={handleUpdateMember} 
+                            onFinishFailed={handleUpdateMemberFailed}
+                        >
+                            <Form.Item 
+                                name="fullName" 
+                                label="이름" 
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "이름은 필수입력 항목입니다."
+                                    }
+                                ]}
+                                validateTrigger={['onBlur']}
+                            >
+                                <Input 
+                                    placeholder="이름을 입력하여 주세요." 
+                                    maxLength={10} 
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="gender"
+                                label="성별"
+                                rules={[
+                                    { 
+                                        required: true, 
+                                        message: '성별은 필수입력 항목입니다.' 
+                                    }
+                                ]}
+                                validateTrigger={['onBlur']}
+                            >
+                                <Select
+                                    placeholder="성별을 선택하여 주세요."
+                                    options={[
+                                        {value: "MALE", label: "남성"},
+                                        {value: "FEMALE", label: "여성"},
+                                        {value: "OTHER", label: "선택안함"},
+                                    ]}
+                                />
+                            </Form.Item>
+                            <Form.Item 
+                                name="dateOfBirth" 
+                                label="생년월일" 
+                                rules={[
+                                    {
+                                        type: 'object' as const, 
+                                        required: true, 
+                                        message: '생년월일은 필수입력 항목입니다.'
+                                    }
+                                ]}
+                            >
+                                <DatePicker 
+                                    placeholder="생년월일을 선택하여 주세요." 
+                                    className={styles.date_picker}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="username"
+                                label="아이디"
+                                rules={[
+                                    {
+                                        required: true
+                                    }
+                                ]}
+                            >
+                                <Input
+                                    readOnly
+                                />
+                            </Form.Item>
+                            <Form.Item 
+                                name="password" 
+                                label="비밀번호" 
+                                rules={[
+                                    {
+                                        validator: validatePassword,
+                                    }
+                                ]}
+                                validateTrigger={['onBlur']}
+                            >
+                                <Input
+                                    type="password"
+                                    placeholder="비밀번호를 입력하여 주세요" 
+                                    maxLength={20}
+                                    onClick={() => {
+                                        const password = form.getFieldValue('password');
+                                        if (password === '********') {
+                                            form.setFieldValue('password', '');
+                                        }
+                                    }}
+                                />
+                            </Form.Item>
+                            <Form.Item 
+                                name="confirmPassword" 
+                                label="비밀번호 확인" 
+                                rules={[
+                                    {
+                                        validator: validateConfirmPassword,
+                                    }
+                                ]}
+                                validateTrigger={['onBlur']}
+                            >
+                                <Input
+                                    type="password"
+                                    placeholder="비밀번호 확인을 입력하여 주세요" 
+                                    maxLength={20}
+                                    onClick={() => {
+                                        const confirmPassword = form.getFieldValue('confirmPassword');
+                                        if (confirmPassword === '********') {
+                                            form.setFieldValue('confirmPassword', '');
+                                        }
+                                    }}
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button block size="large" type="primary" htmlType="submit">회원정보 수정</Button> 
+                                <Button block danger size="large" type="primary" onClick={handleLeave}>회원 탈퇴</Button> 
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
