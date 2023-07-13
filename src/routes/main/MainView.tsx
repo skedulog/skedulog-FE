@@ -1,11 +1,17 @@
 import { Space, Typography, Button } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../../images/skedulog_no_bg_underline.png"
 import styles from "./MainView.module.scss";
 import { Link } from "react-router-dom";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const MainView: React.FC = () => {
     
+    const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('');
+    })
+
     const { Title, Text } = Typography;
     const [hovered, setHovered] = useState(false);
 

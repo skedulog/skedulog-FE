@@ -8,6 +8,7 @@ import { Button, Form, Input } from "antd";
 import { Member } from "../../interfaces/Member";
 import { hashPassword } from "../../crypto/Crypto";
 import { getUsername } from "../../cookie/Cookie";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const PASSWORD_CHECK = gql`
     mutation PasswordCheck($password: String!) {
@@ -16,6 +17,12 @@ const PASSWORD_CHECK = gql`
 `;
 
 const PassWordCheck: React.FC = () => {
+
+    const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('회원정보');
+    })
+    
     const [form] = useForm();
     const navigate = useNavigate();
     const [ passwordCheck, { data } ] = useMutation(PASSWORD_CHECK);
