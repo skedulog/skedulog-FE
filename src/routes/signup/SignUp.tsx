@@ -7,6 +7,7 @@ import styles from "./SignUp.module.scss"
 import { useNavigate } from "react-router";
 import PageTitle from "../../components/pagetitle/PageTitle"
 import { hashPassword } from '../../crypto/Crypto';
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const SIGN_UP = gql`
     mutation SignUp(
@@ -44,6 +45,11 @@ const CHECK_USERNAME_DUPLICACY = gql`
 `;
 
 const SignUp: React.FC = () => {
+
+    const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('회원가입');
+    })
 
     const [createMember, { data }] = useMutation(SIGN_UP);
     const [checkUsernameDuplicacy] = useMutation(CHECK_USERNAME_DUPLICACY);

@@ -10,6 +10,7 @@ import { setRefreshToken, setUsername } from "../../cookie/Cookie";
 import { SET_TOKEN } from "../../redux/Auth";
 import PageTitle from '../../components/pagetitle/PageTitle';
 import { hashPassword } from '../../crypto/Crypto';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const LOG_IN = gql`
     mutation LogIn(
@@ -24,6 +25,11 @@ const LOG_IN = gql`
 `;
 
 const LogIn: React.FC = () => {
+
+    const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('로그인');
+    })
 
     const [failed, setFailed] = useState<boolean>(false);
     const [logIn, { data }] = useMutation(LOG_IN);

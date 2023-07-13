@@ -1,13 +1,20 @@
-import { Routes, Route } from 'react-router-dom';
-import LogIn from './routes/login/LogIn';
-import MainView from './routes/main/MainView';
+import { useEffect } from "react"
+import { Routes, Route } from "react-router-dom";
+import useDocumentTitle from "./hooks/useDocumentTitle";
+import LogIn from "./routes/login/LogIn";
+import MainView from "./routes/main/MainView";
 import MemberUpdate from "./routes/member/MemberUpdate";
-import Navbar from './components/navbar/Navbar';
-import PassWordCheck from './routes/passwordcheck/PasswordCheck';
+import Navbar from "./components/navbar/Navbar";
+import PassWordCheck from "./routes/passwordcheck/PasswordCheck";
 import SignUp from "./routes/signup/SignUp";
 import styles from "./App.module.scss";
 
 const App: React.FC = () => {
+
+  const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('');
+    })
 
   return (
     <div className={styles.app_container}>

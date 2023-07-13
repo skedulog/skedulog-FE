@@ -12,6 +12,7 @@ import PageTitle from "../../components/pagetitle/PageTitle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hashPassword } from "../../crypto/Crypto";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const GET_MEMBER = gql`
     query Member {
@@ -50,6 +51,12 @@ const DELETE_MEMBER = gql`
 `;
 
 const MemberUpdate: React.FC = () => {
+
+    const { setTitle } = useDocumentTitle();
+    useEffect(() => {
+        setTitle('회원정보');
+    })
+    
     const [form] = useForm();
     const [member, setMember] = useState<Member>();
     const client = useApolloClient();
