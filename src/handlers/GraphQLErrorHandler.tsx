@@ -1,5 +1,5 @@
 import { ResponseError } from "../interfaces/ResponseError.tsx";
-import { getCookieToken } from "../cookie/Cookie.tsx";
+import { getCookieToken, removeUsername } from "../cookie/Cookie.tsx";
 import { DELETE_TOKEN, SET_TOKEN } from "../redux/Auth.tsx";
 import { gql } from "@apollo/client";
 import { client } from "../main.tsx";
@@ -40,12 +40,22 @@ export const handleGraphQLError = (err: ResponseError) => {
         } else {
           store.dispatch(DELETE_TOKEN());
           removeCookieToken();
+          removeUsername();
         }
       }).catch((error: any) => console.log('[ERROR] ', error));
     } else {
       store.dispatch(DELETE_TOKEN);
       removeCookieToken();
+      removeUsername();
     }
+  }
+
+  if (code === 'INVALID_REFRESH_TOKEN') {
+    store.dispatch(DELETE_TOKEN());
+    removeCookieToken();
+    removeUsername();
+    location.href = "/login";
+    alert('로그인이 만료되었습니다. \n다시 로그인 해주세요.');
   }
 
   if (code === 'MEMBER_ID_NULL') {
