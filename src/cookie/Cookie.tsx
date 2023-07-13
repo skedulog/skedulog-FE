@@ -19,5 +19,20 @@ export const getCookieToken = () => {
 };
 
 export const removeCookieToken = () => {
-    return cookies.remove('refresh_token', { sameSite: 'strict', path: "/" })
+    return cookies.remove('refresh_token', { sameSite: 'strict', path: "/" });
+}
+
+export const setUsername = (username: string) => {
+    return cookies.set('username', username, {
+        sameSite: 'strict',
+        path: '/'
+    });
+}
+
+export const getUsername = () => {
+    return cookies.get('username');
+}
+
+export const removeUsername = () => {
+    return cookies.remove('username', { sameSite: 'strict', path: '/' });
 }

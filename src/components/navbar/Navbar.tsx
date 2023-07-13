@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu } from "../../interfaces/Menu";
 import { Typography } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { removeCookieToken } from "../../cookie/Cookie";
+import { removeCookieToken, removeUsername } from "../../cookie/Cookie";
 import { DELETE_TOKEN } from "../../redux/Auth";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/skedulog_no_bg_underline.png";
@@ -78,6 +78,7 @@ const Navbar: React.FC = () => {
     const handleLogOut = () => {
         dispatch(DELETE_TOKEN());
         removeCookieToken();
+        removeUsername();
         client.cache.evict({ id: 'ROOT_QUERY', fieldName: 'member' })
         client.cache.gc();
         navigate('/');

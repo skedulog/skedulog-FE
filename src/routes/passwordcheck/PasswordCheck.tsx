@@ -6,6 +6,8 @@ import PageTitle from "../../components/pagetitle/PageTitle";
 import styles from "./PasswordCheck.module.scss";
 import { Button, Form, Input } from "antd";
 import { Member } from "../../interfaces/Member";
+import { hashPassword } from "../../crypto/Crypto";
+import { getUsername } from "../../cookie/Cookie";
 
 const PASSWORD_CHECK = gql`
     mutation PasswordCheck($password: String!) {
@@ -26,7 +28,7 @@ const PassWordCheck: React.FC = () => {
 
     const handleFinish = (data: Member) => {
         const password = data.password;
-        passwordCheck({ variables: { password: password } })
+        passwordCheck({ variables: { password: hashPassword(getUsername(), password ?? '') } })
     }
 
     const handleFinishFailed = (error: any) => {
