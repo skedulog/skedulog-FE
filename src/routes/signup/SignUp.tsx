@@ -6,6 +6,7 @@ import { Member } from "../../interfaces/Member";
 import styles from "./SignUp.module.scss"
 import { useNavigate } from "react-router";
 import PageTitle from "../../components/pagetitle/PageTitle"
+import { hashPassword } from '../../crypto/Crypto';
 
 const SIGN_UP = gql`
     mutation SignUp(
@@ -92,7 +93,7 @@ const SignUp: React.FC = () => {
             createMember({
                 variables: { 
                     createMemberUsername: data.username, 
-                    createMemberPassword: data.password, 
+                    createMemberPassword: hashPassword(data.username ?? '', data.password ?? ''), 
                     createMemberFullName: data.fullName,
                     createMemberGender: data.gender,
                     createMemberDateOfBirth: data.dateOfBirth

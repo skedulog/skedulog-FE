@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import PageTitle from "../../components/pagetitle/PageTitle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { hashPassword } from "../../crypto/Crypto";
 
 const GET_MEMBER = gql`
     query Member {
@@ -129,11 +130,18 @@ const MemberUpdate: React.FC = () => {
     }
 
     const handleUpdateMember = (data: Member) => {
+
+        if (!data.username || !data.password) {
+            throw new Error('username and password cannot be null');
+        }
+
         const dateOfBirth = dayjs(data.dateOfBirth).format('YYYY-MM-DD');
+        const hashedPassword = hashPassword(data.username ?? '', data.password ?? '');
+
         if (data.fullName === member?.fullName 
             && data.gender === member?.gender 
             && dateOfBirth === String(member?.dateOfBirth) 
-            && (data.password === '********' || data.password === member?.password)) {
+            && (data.password === '********' || hashedPassword === member?.password)) {
                 alert("수정사항을 입력하여 주세요.");
                 return false;
         }
@@ -143,7 +151,7 @@ const MemberUpdate: React.FC = () => {
             if (data.fullName !== member.fullName) variables.fullName = data.fullName;
             if (data.gender !== member.gender) variables.gender = data.gender;
             if (dateOfBirth !== String(member.dateOfBirth)) variables.dateOfBirth = data.dateOfBirth;
-            if (data.password !== '********' && data.password !== member.password) variables.password = data.password;
+            if (data.password !== '********' && hashedPassword !== member.password) variables.password = hashedPassword;
             updateMember({variables: variables});
             client.cache.evict({ id: `Member:${member.id}` });
         }

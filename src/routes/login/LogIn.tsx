@@ -6,9 +6,10 @@ import { gql, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { setRefreshToken } from "../../cookie/Cookie";
+import { setRefreshToken, setUsername } from "../../cookie/Cookie";
 import { SET_TOKEN } from "../../redux/Auth";
 import PageTitle from '../../components/pagetitle/PageTitle';
+import { hashPassword } from '../../crypto/Crypto';
 
 const LOG_IN = gql`
     mutation LogIn(
@@ -37,6 +38,7 @@ const LogIn: React.FC = () => {
             if (response.ok) {
                 setFailed(false);
                 setRefreshToken(response.tokens.refreshToken);
+                setUsername(form.getFieldValue('username'));
                 dispatch(SET_TOKEN(response.tokens.accessToken));
                 navigate('/');
             } else {
@@ -46,7 +48,7 @@ const LogIn: React.FC = () => {
     }, [data])
 
     const handleFinish = (data: LogInType) => {
-        logIn({ variables: { username: data.username, password: data.password }});
+        logIn({ variables: { username: data.username, password: hashPassword(data.username, data.password) }});
     }
 
     const handleFinishFailed = (error: any) => {
