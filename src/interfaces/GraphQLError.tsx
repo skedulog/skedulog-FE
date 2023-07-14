@@ -1,3 +1,5 @@
+import { ValidationResult } from "./ValidationResult";
+
 export interface GraphQLError {
     message: string | null | undefined;
     extensions: {
@@ -9,6 +11,7 @@ export interface GraphQLError {
             code: string;
             message: string;
             status: number;
+            validationResult?: [ValidationResult]
         }
     }
 }

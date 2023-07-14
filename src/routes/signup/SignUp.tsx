@@ -1,13 +1,15 @@
-import { useEffect } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { ApolloError, gql, useMutation } from "@apollo/client";
 import { useForm } from "antd/es/form/Form";
-import { Button, Form, Input, Select, DatePicker } from "antd"
+import { Button, Form, Input, Select, DatePicker, Typography, Space } from "antd"
 import { Member } from "../../interfaces/Member";
 import styles from "./SignUp.module.scss"
 import { useNavigate } from "react-router";
 import PageTitle from "../../components/pagetitle/PageTitle"
 import { hashPassword } from '../../crypto/Crypto';
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { ValidationResult } from "../../interfaces/ValidationResult";
+import { GraphQLError } from "../../interfaces/GraphQLError";
 
 const SIGN_UP = gql`
     mutation SignUp(
@@ -51,11 +53,26 @@ const SignUp: React.FC = () => {
         setTitle('회원가입');
     })
 
-    const [createMember, { data }] = useMutation(SIGN_UP);
+    const errorHandler = (err: ApolloError) => {
+        const error = err.graphQLErrors[0] as unknown;
+        const tmp = error as GraphQLError;
+        const result = tmp.extensions.http.validationResult;
+        
+        const messages: string[] = [];
+        [].forEach.call(result, (each: ValidationResult) => {
+            messages.push(each.error.message);
+        })
+        
+        setError(messages);
+    }
+
+    const [createMember, { data }] = useMutation(SIGN_UP, { onError: errorHandler });
     const [checkUsernameDuplicacy] = useMutation(CHECK_USERNAME_DUPLICACY);
 
+    const [error, setError] = useState<string[]>(['']);console.log(error);
     const [form] = useForm();
     const navigate = useNavigate();
+    const { Text } = Typography;
 
     useEffect(() => {
         if (data !== undefined) {
@@ -241,6 +258,13 @@ const SignUp: React.FC = () => {
                     </Form.Item>
                 </Form>
             </div>
+            {error ? (
+                <Space direction="vertical" align="center">
+                    {error.map((each, index) => {
+                        return <Text key={index} type="danger">{each}</Text>
+                    })}
+                </Space>
+            ) : <></>}
         </div>
     );
 }
